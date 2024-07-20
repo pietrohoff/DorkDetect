@@ -1,0 +1,23 @@
+# Ignore dependencies
+/vendor/
+
+# Ignore Composer files
+composer.lock
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore environment variable files
+.env
+
+# Ignore macOS specific files
+*.DS_Store
+
+# Ignore all hidden files except .gitignore
+.*
+!.gitignore
