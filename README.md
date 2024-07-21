@@ -1,5 +1,5 @@
 
-# DorkScanner
+# DorkDetect
 
 ```
   _____             _    _____       _            _   
