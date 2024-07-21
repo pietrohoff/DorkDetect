@@ -15,27 +15,41 @@ class GoogleSearch
     public function __construct()
     {
         $this->client = new Client();
-        $this->userAgents = [
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36',
-            'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:62.0) Gecko/20100101 Firefox/62.0',
-        ];
-        $this->delayBetweenRequests = 15; // Delay de 15 segundos entre requisições
+        $this->userAgents = $this->loadUserAgentsFromFile('lib/user_agents.txt');
+        $this->delayBetweenRequests = rand(5, 15); // Delay de 15 segundos entre requisições
+    }
+
+    private function loadUserAgentsFromFile($filePath)
+    {
+        $userAgents = [];
+
+        if (file_exists($filePath)) {
+            $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                $userAgents[] = trim($line);
+            }
+        } else {
+            throw new \Exception("User agents file not found: " . $filePath);
+        }
+
+        return $userAgents;
     }
 
     public function search($query, $gaps)
     {
         $allLinks = [];
 
+        // Embaralha os user agents para garantir que a seleção seja aleatória
+        shuffle($this->userAgents);
+
         foreach ($gaps as $gap) {
             $urlquery = "site:" . $query . " " . $gap;
-            $url = 'https://www.google.com/search?client=ms-google-coop&q=' . urlencode($urlquery);
+            $url = 'https://www.google.com/search?q=' . urlencode($urlquery);
 
             try {
-                // Alternar User-Agents para tentar evitar bloqueios
+                // Selecionar um User-Agent aleatório
                 $userAgent = $this->userAgents[array_rand($this->userAgents)];
-                
+
                 // Atraso antes de fazer a requisição
                 sleep($this->delayBetweenRequests);
 
@@ -61,6 +75,7 @@ class GoogleSearch
                 $validLinkCount = 0;
 
                 $results->each(function (Crawler $node) use (&$links, &$validLinkCount) {
+                    // print_r($node);
                     $node->filter('a')->each(function (Crawler $linkNode) use (&$links, &$validLinkCount) {
                         $link = $linkNode->attr('href');
                         if ($link) {
@@ -78,10 +93,11 @@ class GoogleSearch
 
                 if ($validLinkCount > 0) {
                     echo "- Vulnerability found for query: " . $gap . "\n";
+                }else{
+                    echo "- No Vulnerability found for query: " . $gap . "\n";
                 }
 
                 $allLinks = array_merge($allLinks, $links);
-
             } catch (RequestException $e) {
                 if ($e->hasResponse()) {
                     $statusCode = $e->getResponse()->getStatusCode();

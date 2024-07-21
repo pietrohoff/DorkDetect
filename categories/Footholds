@@ -1,4 +1,3 @@
-inurl:adminpanel site:gov.*
 inurl:maps.arcgis.com +"City of"
 inurl:wsnavigator/jsps
 intitle:"index of" "httpd.pid"
@@ -20,15 +19,13 @@ intitle:"index of" "admin/xml"
 Find Microsoft Lync Server AutoDiscover
 inurl:/download_file/ intext:"index of /"
 inurl:/servicedesk/customer/user/login
-site:linkedin.com employees target.com
 inurl:"customer.aspx"
 intitle:("Mini Shell") AND intext:("Upload File")
 intitle:("Index of") AND intext:("c99.txt" OR "c100.txt")
 intitle:"(SSI Web Shell)" AND intext:"(ls -al)"
-site:bamboo.*.* ext:action build
 inurl:"index of" wso
 intitle:"freedom is real - 1945"
-site:*/wp-admin/install.php intitle:WordPress Installation
+inurl:*/wp-admin/install.php intitle:WordPress Installation
 inurl:"index.php?db="
 intitle:Administration - Installation - MantisBT
 inurl:/phpmyadmin/index.php?db=
@@ -52,7 +49,7 @@ intitle:"Solr Admin" "Solr Query Syntax"
 ext:jsp  intext:"jspspy" intitle:"Jspspy web~shell V1.0"
 "Sorting Logs:" "Please enter your password" "Powered By" -urlscan -alamy
 intitle:"Authorization" "TF" inurl:"admin.php"
-ext:php intext:"-rwxr-xr-x" site:.in
+ext:php intext:"-rwxr-xr-x"
 intitle:index of intext:@WanaDecryptor@.exe
 intitle:index of intext:wncry
 inurl:"go.cgi?url="
