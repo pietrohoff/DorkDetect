@@ -54,6 +54,7 @@ if ($choice > 0 && $choice <= count($categories)) {
 $links = $googleSearch->search($query, $gaps);
 
 if (!$links) {
+    echo "\n\n";
     echo "No vulnerabilities found.\n";
 }
 ?>
