@@ -83,6 +83,9 @@ Categorias disponíveis:
 4. Todas as categorias
 Escolha uma categoria (número): 1
 ```
+As categorias de dorks foram retiradas do repositório GHDB-Wordlist-Collector, que contém uma coleção de dorks organizados por categorias. 
+
+Repositorio: https://github.com/pietrohoff/GHDB-Wordlist-Collector
 
 ## Contribuindo
 
